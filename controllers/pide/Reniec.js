@@ -12,7 +12,8 @@ const consultaDni = (req, res) => {
         {
             params: {
                 out: 'json'
-            }, body: {
+            },
+            body: {
                 PIDE: {
                     nuDniConsulta,
                     nuDniUsuario,
@@ -21,8 +22,14 @@ const consultaDni = (req, res) => {
                 }
             },
         })
-        .then(response => httpOk200Content(res, response.data, 'Consulta Realizada Correctamente.'))
-        .catch(error => httpError500(res, error));
+        .then(response => {
+            console.log(response)
+            httpOk200Content(res, response.data, 'Consulta Realizada Correctamente.')
+        })
+        .catch(error => {
+            console.log(error)
+            httpError500(res, error)
+        });
 }
 
 const actualizarCredencial = (req, res) => {
