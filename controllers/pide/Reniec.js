@@ -8,19 +8,14 @@ const API_RENIEC = 'https://ws2.pide.gob.pe/Rest/RENIEC';
 const consultaDni = (req, res) => {
     const { nuDniConsulta, nuDniUsuario, nuRucUsuario, password } = req.query;
     axios
-        .post(`${API_RENIEC}/Consultar`,
+        .post(`${API_RENIEC}/Consultar?out=json`,
         {
-            params: {
-                out: 'json'
-            },
-            body: {
                 PIDE: {
                     nuDniConsulta,
                     nuDniUsuario,
                     nuRucUsuario,
                     password,
-                }
-            },
+                },
         })
         .then(response => {
             console.log(response)
