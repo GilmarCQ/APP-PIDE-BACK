@@ -19,11 +19,9 @@ const consultaDni = (req, res) => {
                 },
         })
         .then(response => {
-            console.log(response.config)
             httpOk200Content(res, response.data, 'Consulta Realizada Correctamente.')
         })
         .catch(error => {
-            console.log(error)
             httpError500(res, error)
         });
 }
@@ -31,8 +29,15 @@ const consultaDni = (req, res) => {
 const actualizarCredencial = (req, res) => {
     const { credencialAnterior, credencialNueva, nuDni, nuRuc } = req.query;
     axios
-        .get(`${API_RENIEC}/ActualizarCredencial`,
-            { params: { credencialAnterior, credencialNueva, nuDni, nuRuc, out: 'json' } })
+        .post(`${API_RENIEC}/Actualizar?iut=json`,
+            {
+                PIDE: {
+                    credencialAnterior,
+                    credencialNueva,
+                    nuDni,
+                    nuRuc,
+                }
+            })
         .then(response => httpOk200Content(res, response.data, 'Actualización de credencial correcta.'))
         .catch(error => httpError500(res, error));
 }
