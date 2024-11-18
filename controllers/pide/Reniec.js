@@ -2,20 +2,24 @@ const axios = require('axios');
 const {
     httpError500,
     httpOk200Content} = require('../../utils/httpMessages');
-const API_RENIEC = 'https://ws5.pide.gob.pe/Rest/Reniec';
+// const API_RENIEC = 'https://ws5.pide.gob.pe/Rest/Reniec';
+const API_RENIEC = 'https://ws2.pide.gob.pe/Rest/RENIEC';
 
 const consultaDni = (req, res) => {
     const { nuDniConsulta, nuDniUsuario, nuRucUsuario, password } = req.query;
     axios
-        .get(`${API_RENIEC}/Consultar`,
+        .post(`${API_RENIEC}/Consultar`,
         {
             params: {
-                nuDniConsulta,
-                nuDniUsuario,
-                nuRucUsuario,
-                password,
                 out: 'json'
-            }
+            }, body: {
+                PIDE: {
+                    nuDniConsulta,
+                    nuDniUsuario,
+                    nuRucUsuario,
+                    password,
+                }
+            },
         })
         .then(response => httpOk200Content(res, response.data, 'Consulta Realizada Correctamente.'))
         .catch(error => httpError500(res, error));
